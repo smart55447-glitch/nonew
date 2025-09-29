@@ -1,0 +1,109 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #000;
+    color: #00ff99;
+    font-family: 'Bitcount Single Ink', monospace;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#nonew-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+pre {
+    font-size: 15px;
+    line-height: 1.2em;
+    text-align: left;
+    white-space: pre;
+    overflow: hidden;
+    height: 0;
+    animation: floodTyping 1.5s steps(50, end) forwards;
+}
+
+@keyframes floodTyping {
+    from {
+        height: 0;
+    }
+
+    to {
+        height: 100%;
+    }
+}
+
+/* NO 초기 상태 */
+.no {
+    display: inline-block;
+    color: #00ff99;
+    transform-origin: center;
+    /* 색 변환 → 깜빡임 순서대로 애니메이션 두 개 연결 */
+    animation: colorChange 0.5s ease forwards 1.5s, blinkEyes 1s ease-in-out infinite 2.1s;
+}
+
+/* 타이핑 완료 후 붉은색으로 변함 */
+@keyframes colorChange {
+    0% {
+        color: #00ff99;
+    }
+
+    100% {
+        color: red;
+    }
+}
+
+/* 눈 깜빡임: 위아래로 납작해졌다 돌아오기 */
+@keyframes blinkEyes {
+
+    0%,
+    90%,
+    100% {
+        transform: scaleY(1);
+    }
+
+    95% {
+        transform: scaleY(0.1);
+    }
+}
+
+/* 페이드아웃 (선택사항) */
+.fadeout-overlay {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+    animation: fadeout 2.5s ease forwards;
+    animation-delay: 7s;
+}
+
+@keyframes fadeout {
+    to {
+        opacity: 1;
+    }
+}
+
+/* 페이드아웃 (선택사항) */
+.fadeout-overlay {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+    animation: fadeout 2.5s ease forwards;
+    animation-delay: 7s;
+}
+
+@keyframes fadeout {
+    to {
+        opacity: 1;
+    }
+}

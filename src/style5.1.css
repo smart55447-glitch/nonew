@@ -1,0 +1,61 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: #00ff99;
+    font-family: 'Bitcount Single Ink', monospace;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#response-container {
+    text-align: center;
+}
+
+/* 타이핑 효과 */
+.sarcastic-line {
+    font-size: 18px;
+    border-right: 1px solid #00ff99;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+    margin: 12px 0;
+    animation: typing 2.5s steps(40, end) forwards;
+    animation-delay: var(--delay);
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+/* 🔥 화면 전체 페이드아웃 효과 */
+.fadeout-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+    pointer-events: none;
+    animation: fadeOut 2s ease-in forwards;
+    animation-delay: 8s;
+    /* 마지막 대사 끝난 후 시작 */
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

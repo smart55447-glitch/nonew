@@ -1,0 +1,690 @@
+/* 기본 화면 세팅 */
+body {
+    font-family: 'Bitcount Single Ink', monospace;
+    background: #000;
+    color: #00ff99;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* CRT 수평 스캔라인 */
+body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.03) 0px,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 2px);
+    background-size: 100% 3px;
+    mix-blend-mode: overlay;
+    animation: scanMove 4s linear infinite;
+    z-index: 1;
+}
+
+@keyframes scanMove {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 100px;
+    }
+}
+
+/* 치지직 가로 노이즈 */
+#crt-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(to bottom,
+            transparent 0px,
+            transparent 3px,
+            rgba(0, 255, 153, 0.15) 4px);
+    opacity: 0.1;
+    mix-blend-mode: screen;
+    animation: glitchLines 2.5s infinite steps(2, end);
+    z-index: 2;
+}
+
+@keyframes glitchLines {
+
+    0%,
+    20%,
+    22%,
+    40%,
+    60%,
+    100% {
+        opacity: 0.08;
+        transform: translateY(0);
+    }
+
+    21% {
+        opacity: 0.2;
+        transform: translateY(-2px);
+    }
+
+    41% {
+        opacity: 0.15;
+        transform: translateY(2px);
+    }
+
+    61% {
+        opacity: 0.25;
+        transform: translateY(-1px);
+    }
+}
+
+/* 수직 플래시 (CRT 고장 번쩍) */
+#glitch-vertical {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    left: 50%;
+    background: linear-gradient(to bottom,
+            transparent,
+            rgba(0, 255, 153, 0.7),
+            transparent);
+    opacity: 0;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    z-index: 3;
+    animation: verticalFlash 6s infinite;
+}
+
+@keyframes verticalFlash {
+
+    0%,
+    90%,
+    100% {
+        opacity: 0;
+    }
+
+    45% {
+        opacity: 0.8;
+        transform: translateX(-50%) scaleY(1);
+    }
+
+    46% {
+        opacity: 1;
+        transform: translateX(-50%) scaleY(1.2);
+    }
+
+    47% {
+        opacity: 0;
+        transform: translateX(-50%) scaleY(1);
+    }
+}
+
+/* 컨테이너 */
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    z-index: 10;
+    position: relative;
+}
+
+/* 링크 */
+.name-link {
+    text-decoration: none;
+    font-size: 20px;
+    color: #00ff99;
+    background: #111;
+    border: 1px solid #00ff99;
+    padding: 8px 16px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px #00ff99aa;
+    letter-spacing: 1px;
+    position: relative;
+    transition: all 0.25s;
+}
+
+.name-link::before,
+.name-link::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    z-index: -1;
+}
+
+.name-link::before {
+    left: -2px;
+    color: #00ffff33;
+}
+
+.name-link::after {
+    left: 2px;
+    color: #ff00ff33;
+}
+
+.name-link:hover {
+    background: #00ff99;
+    color: #000;
+    box-shadow: 0 0 25px #00ff99;
+    filter: brightness(1.3) contrast(1.2);
+}
+
+/* 얼굴 */
+#face {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 눈 */
+#eyes {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 8px;
+}
+
+.eye {
+    font-size: 48px;
+    display: inline-block;
+    animation: blink 2.8s infinite, flicker 2.2s infinite;
+    transform-origin: center;
+    text-shadow: 0 0 6px #00ff99, 1px 0 #00ffff66, -1px 0 #ff00ff66;
+}
+
+@keyframes blink {
+
+    0%,
+    85%,
+    100% {
+        transform: scaleY(1);
+    }
+
+    92% {
+        transform: scaleY(0.15);
+    }
+}
+
+@keyframes flicker {
+
+    0%,
+    18%,
+    22%,
+    28%,
+    54%,
+    58%,
+    100% {
+        opacity: 1;
+    }
+
+    19%,
+    21%,
+    25%,
+    55% {
+        opacity: 0.7;
+    }
+
+    23%,
+    56% {
+        opacity: 0.4;
+    }
+}
+
+/* 입 */
+#mouth {
+    font-size: 32px;
+    letter-spacing: 4px;
+    text-shadow: 0 0 6px #00ff99, 1px 0 #00ffff66, -1px 0 #ff00ff66;
+    animation: glitchMouth 1.2s infinite;
+    filter: contrast(1.1) brightness(1.2);
+}
+
+@keyframes glitchMouth {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    20% {
+        transform: translate(1px, -1px);
+    }
+
+    40% {
+        transform: translate(-1px, 1px);
+    }
+
+    60% {
+        transform: translate(0px, 1px);
+    }
+
+    80% {
+        transform: translate(-1px, 0px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+/* 🟩 1. CRT 스캔라인 */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.03) 0px,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 2px);
+    background-size: 100% 3px;
+    mix-blend-mode: overlay;
+    animation: scanMove 4s linear infinite;
+    z-index: 100;
+}
+
+@keyframes scanMove {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 100px;
+    }
+}
+
+/* 🟦 2. 치지직 가로 노이즈 */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(to bottom,
+            transparent 0px,
+            transparent 3px,
+            rgba(0, 255, 153, 0.15) 4px);
+    opacity: 0.1;
+    mix-blend-mode: screen;
+    animation: glitchLines 2.5s infinite steps(2, end);
+    z-index: 101;
+}
+
+@keyframes glitchLines {
+
+    0%,
+    20%,
+    22%,
+    40%,
+    60%,
+    100% {
+        opacity: 0.08;
+        transform: translateY(0);
+    }
+
+    21% {
+        opacity: 0.2;
+        transform: translateY(-2px);
+    }
+
+    41% {
+        opacity: 0.15;
+        transform: translateY(2px);
+    }
+
+    61% {
+        opacity: 0.25;
+        transform: translateY(-1px);
+    }
+}
+
+/* 🟥 3. 수직 번쩍 효과 */
+.glitch-vertical {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: linear-gradient(to bottom,
+            transparent,
+            rgba(0, 255, 153, 0.7),
+            transparent);
+    pointer-events: none;
+    opacity: 0;
+    mix-blend-mode: screen;
+    z-index: 102;
+    animation: verticalFlash 6s infinite;
+}
+
+@keyframes verticalFlash {
+
+    0%,
+    90%,
+    100% {
+        opacity: 0;
+    }
+
+    45% {
+        opacity: 0.8;
+        transform: translateX(-50%) scaleY(1);
+    }
+
+    46% {
+        opacity: 1;
+        transform: translateX(-50%) scaleY(1.2);
+    }
+
+    47% {
+        opacity: 0;
+        transform: translateX(-50%) scaleY(1);
+    }
+}
+
+/* 수직 번쩍용 가상요소 추가 (HTML 수정 없이) */
+body::marker,
+body::selection {
+    display: none;
+}
+
+body::backdrop {
+    display: none;
+}
+
+body::after,
+body::before {
+    pointer-events: none;
+}
+
+body::before,
+body::after,
+body .glitch-vertical {
+    will-change: transform, opacity;
+}
+
+/* 🌀 4. 화면 전체 흔들림 glitch 효과 */
+html {
+    animation: globalGlitch 3s infinite;
+}
+
+@keyframes globalGlitch {
+
+    0%,
+    100% {
+        transform: none;
+    }
+
+    10% {
+        transform: translate(2px, -2px) skew(0.5deg, 0.5deg);
+    }
+
+    12% {
+        transform: translate(-2px, 1px);
+    }
+
+    14% {
+        transform: translate(1px, -1px);
+    }
+
+    50% {
+        transform: none;
+    }
+
+    60% {
+        transform: translate(-1px, 2px) skew(-0.4deg, 0.3deg);
+    }
+
+    62% {
+        transform: translate(1px, -1px);
+    }
+
+    64% {
+        transform: none;
+    }
+}
+
+/* 1. 기본 설정 */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #000;
+    color: #00ff99;
+    font-family: 'Bitcount Single Ink', monospace;
+    overflow: hidden;
+}
+
+/* 2. CRT 스캔라인 효과 */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.03) 0px,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 2px);
+    background-size: 100% 3px;
+    mix-blend-mode: overlay;
+    animation: scanMove 4s linear infinite;
+    z-index: 100;
+}
+
+@keyframes scanMove {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 100px;
+    }
+}
+
+/* 3. 치지직 가로 노이즈 */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(to bottom,
+            transparent 0px,
+            transparent 3px,
+            rgba(0, 255, 153, 0.15) 4px);
+    opacity: 0.1;
+    mix-blend-mode: screen;
+    animation: glitchLines 2.5s infinite steps(2, end);
+    z-index: 101;
+}
+
+@keyframes glitchLines {
+
+    0%,
+    20%,
+    22%,
+    40%,
+    60%,
+    100% {
+        opacity: 0.08;
+        transform: translateY(0);
+    }
+
+    21% {
+        opacity: 0.2;
+        transform: translateY(-2px);
+    }
+
+    41% {
+        opacity: 0.15;
+        transform: translateY(2px);
+    }
+
+    61% {
+        opacity: 0.25;
+        transform: translateY(-1px);
+    }
+}
+
+/* 4. 수직 플래시 */
+#vertical-flash {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: linear-gradient(to bottom,
+            transparent,
+            rgba(0, 255, 153, 0.7),
+            transparent);
+    pointer-events: none;
+    opacity: 0;
+    mix-blend-mode: screen;
+    z-index: 102;
+    animation: verticalFlash 6s infinite;
+}
+
+@keyframes verticalFlash {
+
+    0%,
+    90%,
+    100% {
+        opacity: 0;
+    }
+
+    45% {
+        opacity: 0.8;
+        transform: translateX(-50%) scaleY(1);
+    }
+
+    46% {
+        opacity: 1;
+        transform: translateX(-50%) scaleY(1.2);
+    }
+
+    47% {
+        opacity: 0;
+        transform: translateX(-50%) scaleY(1);
+    }
+}
+
+/* 5. 전체 화면 흔들림 glitch 효과 */
+html {
+    animation: globalGlitch 3s infinite;
+}
+
+@keyframes globalGlitch {
+
+    0%,
+    100% {
+        transform: none;
+    }
+
+    10% {
+        transform: translate(2px, -2px) skew(0.5deg, 0.5deg);
+    }
+
+    12% {
+        transform: translate(-2px, 1px);
+    }
+
+    14% {
+        transform: translate(1px, -1px);
+    }
+
+    50% {
+        transform: none;
+    }
+
+    60% {
+        transform: translate(-1px, 2px) skew(-0.4deg, 0.3deg);
+    }
+
+    62% {
+        transform: translate(1px, -1px);
+    }
+
+    64% {
+        transform: none;
+    }
+}
+
+/* 6. 컨테이너 (기존 스타일 유지 가능) */
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 16px;
+    z-index: 200;
+    position: relative;
+}
+
+/* 링크 스타일 (기존 유지) */
+.name-link {
+    text-decoration: none;
+    font-size: 20px;
+    color: #00ff99;
+    background: #111;
+    border: 1px solid #00ff99;
+    padding: 8px 16px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px #00ff99aa;
+    letter-spacing: 1px;
+    transition: all 0.25s;
+}
+
+.name-link:hover {
+    background: #00ff99;
+    color: #000;
+    box-shadow: 0 0 25px #00ff99;
+    filter: brightness(1.3) contrast(1.2);
+}
+
+/* 눈 */
+.eye {
+    font-size: 48px;
+    display: inline-block;
+    animation: blink 2.8s infinite, flicker 2.2s infinite;
+    transform-origin: center;
+    text-shadow: 0 0 6px #00ff99, 1px 0 #00ffff66, -1px 0 #ff00ff66;
+}
+
+@keyframes blink {
+
+    0%,
+    85%,
+    100% {
+        transform: scaleY(1);
+    }
+
+    92% {
+        transform: scaleY(0.15);
+    }
+}
+
+@keyframes flicker {
+
+    0%,
+    18%,
+    22%,
+    28%,
+    54%,
+    58%,
+    100% {
+        opacity: 1;
+    }
+
+    19%,
+    21%,
+    25%,
+    55% {
+        opacity: 0.7;
+    }
+
+    23%,
+    56% {
+        opacity: 0.4;
+    }
+}

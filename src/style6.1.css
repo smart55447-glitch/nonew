@@ -1,0 +1,351 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #000;
+    color: #00ff99;
+    font-family: 'Bitcount Single Ink', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* CRT 스캔라인 효과 */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.03) 0px,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 2px);
+    background-size: 100% 3px;
+    mix-blend-mode: overlay;
+    animation: scanMove 4s linear infinite;
+}
+
+@keyframes scanMove {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 0 100px;
+    }
+}
+
+/* 텍스트 컨테이너 */
+#text-container {
+    max-width: 700px;
+    text-align: center;
+    line-height: 1.8;
+    white-space: nowrap;
+}
+
+/* 각 줄 애니메이션 */
+.line {
+    display: block;
+    overflow: hidden;
+    border-right: 1px solid #00ff99;
+    width: 0;
+    opacity: 0;
+    font-size: 15px;
+    margin: 12px 0;
+    animation: typing 2.5s steps(50, end) forwards, blink 0.7s step-end infinite alternate;
+    animation-delay: var(--delay);
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+        opacity: 1;
+    }
+
+    to {
+        width: 100%;
+        opacity: 1;
+    }
+}
+
+@keyframes blink {
+    0% {
+        border-color: #00ff99;
+    }
+
+    50% {
+        border-color: transparent;
+    }
+
+    100% {
+        border-color: #00ff99;
+    }
+}
+
+/* 🧠 서서히 위에서부터 띄엄띄엄 글자가 사라지는 효과 */
+.line::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.2) 20%,
+            rgba(0, 0, 0, 0.5) 40%,
+            rgba(0, 0, 0, 0.8) 70%,
+            #000 100%);
+    mix-blend-mode: multiply;
+    opacity: 0;
+    pointer-events: none;
+    animation: glitchErase 6s steps(20, end) forwards;
+    animation-delay: calc(var(--delay) + 5s);
+    /* 타이핑 후 일정 시간 뒤에 시작 */
+}
+
+@keyframes glitchErase {
+    0% {
+        opacity: 0;
+        height: 0%;
+        transform: translateY(0);
+    }
+
+    10% {
+        opacity: 1;
+        height: 10%;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 1;
+        height: 100%;
+        transform: translateY(5px);
+    }
+
+    100% {
+        opacity: 1;
+        height: 100%;
+        transform: translateY(0);
+    }
+}
+
+.binary-line {
+    font-family: monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: #00ff99;
+    display: inline-block;
+    overflow: hidden;
+    border-right: 1px solid #00ff99;
+    width: 0;
+    opacity: 0;
+    animation: typingBinary 4s steps(60, end) forwards, blink 0.7s step-end infinite alternate;
+    animation-delay: var(--delay);
+    margin-top: 12px;
+}
+
+@keyframes typingBinary {
+    from {
+        width: 0;
+        opacity: 1;
+    }
+
+    to {
+        width: 100%;
+        opacity: 1;
+    }
+}
+
+/* 쓸려내림 */
+.collapse-overlay {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    background: #000;
+    transform: translateY(-100%);
+    animation: collapseDown 2s ease-in forwards;
+    animation-delay: 22.5s;
+    z-index: 1;
+}
+
+@keyframes collapseDown {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    30% {
+        transform: translateY(-20%);
+    }
+
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+/* 👾 로봇 얼굴 */
+#face {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #00ff99;
+    opacity: 0;
+    z-index: 2;
+    font-family: 'Bitcount Single Ink', monospace;
+
+    /* 👇 등장 + 확대 glitch 붕괴 순서대로 실행 */
+    animation: faceAppear 3s ease forwards 25s,
+        faceGlitchOut 2.5s ease-in forwards 32s;
+}
+
+#eyes {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 8px;
+}
+
+.eye {
+    font-size: 48px;
+    display: inline-block;
+    animation: flicker 1.5s infinite;
+    text-shadow: 0 0 8px #00ff99;
+}
+
+#mouth {
+    font-size: 28px;
+    text-shadow: 0 0 8px #00ff99;
+    animation: glitchMouth 1.8s infinite;
+}
+
+/* 얼굴 등장 */
+@keyframes faceAppear {
+    0% {
+        opacity: 0;
+        filter: blur(8px);
+        transform: scale(0.9);
+    }
+
+    50% {
+        opacity: 0.7;
+        filter: blur(3px);
+        transform: scale(1.02);
+    }
+
+    100% {
+        opacity: 1;
+        filter: none;
+        transform: scale(1);
+    }
+}
+
+/* 얼굴 glitch 확대 붕괴 */
+@keyframes faceGlitchOut {
+    0% {
+        transform: scale(1);
+        filter: none;
+        opacity: 1;
+    }
+
+    30% {
+        transform: scale(1.3) skew(5deg);
+        filter: contrast(300%) hue-rotate(20deg);
+    }
+
+    60% {
+        transform: scale(2) skew(-10deg);
+        filter: blur(2px) contrast(500%);
+    }
+
+    100% {
+        transform: scale(3);
+        filter: blur(10px);
+        opacity: 0;
+    }
+}
+
+/* 눈 flicker */
+@keyframes flicker {
+
+    0%,
+    19%,
+    21%,
+    23%,
+    25%,
+    54%,
+    56%,
+    100% {
+        opacity: 1;
+    }
+
+    20%,
+    22%,
+    24%,
+    55% {
+        opacity: 0.6;
+    }
+}
+
+/* 입 glitch */
+@keyframes glitchMouth {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    45% {
+        transform: translate(1px, 0);
+    }
+
+    50% {
+        transform: translate(-1px, 1px);
+    }
+
+    55% {
+        transform: translate(1px, -1px);
+    }
+}
+
+#game-over {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 70px;
+    font-weight: bold;
+    color: red;
+    opacity: 0;
+    text-shadow: 0 0 10px red, 0 0 30px red;
+    animation: gameOverFade 2.5s ease-out forwards, gameOverDisappear 2.5s ease-in forwards 35s;
+    animation-delay: 30s;
+    pointer-events: none;
+}
+
+/* 등장: 그냥 서서히 나타남 */
+@keyframes gameOverFade {
+    0% {
+        opacity: 0;
+        filter: blur(8px);
+    }
+
+    100% {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+/* 사라짐: 천천히 어두워지며 사라짐 */
+@keyframes gameOverDisappear {
+    0% {
+        opacity: 1;
+        filter: blur(0);
+    }
+
+    100% {
+        opacity: 0;
+        filter: blur(5px);
+    }
+}
