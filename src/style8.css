@@ -1,0 +1,347 @@
+:root {
+    --bg: #f5f7f5;
+    /* 전체 배경 */
+    --card: #ffffff;
+    /* 카드 본문 배경 */
+    --text: #1f1f1d;
+    /* 기본 글자색 */
+    --muted: #5c5c5c;
+    /* 보조 텍스트 */
+    --accent: #3e8e41;
+    /* 포인트 초록 (부드럽고 중간톤) */
+    --border: #d6dbd2;
+    /* 테두리 회색 */
+    --link: #2e7031;
+    /* 링크 기본 */
+    --link-hover: #1d5920;
+    /* 링크 hover */
+    --toc: #f0f4ef;
+    /* 목차 배경 */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+    line-height: 1.7;
+}
+
+/* 링크 */
+a {
+    color: var(--link);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+}
+
+/* 헤더 박스 */
+header {
+    background: #fff;
+    border-bottom: 1px solid #d0d4d0;
+    padding: 14px 18px 10px;
+    position: static;
+    /* ✅ sticky 대신 static으로 */
+    z-index: 10;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* 제목 */
+.title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.3;
+}
+
+.title-main {
+    display: inline;
+}
+
+.title-sub {
+    display: inline;
+    margin-left: 8px;
+    color: #89d689;
+    font-family: "Courier New", monospace;
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+/* 공지 박스 */
+.doc-notice {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #333;
+    background: #f0f4ef;
+    border: 1px solid #ccd5cc;
+    border-radius: 6px;
+    padding: 6px 10px;
+    max-width: 480px;
+    /* 🔸 박스 폭 제한 */
+}
+
+
+
+/* 메인 레이아웃 */
+.wrap {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 18px;
+}
+
+/* 목차 */
+.toc {
+    background: var(--toc);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 12px;
+}
+
+.toc h3 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: var(--accent);
+}
+
+.toc a {
+    display: block;
+    padding: 4px 6px;
+    font-size: 14px;
+    border-radius: 4px;
+    color: var(--text);
+}
+
+.toc a:hover {
+    background: #e3ebe3;
+    color: var(--accent);
+}
+
+/* 본문 카드 */
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+    margin-top: 0;
+    color: var(--accent);
+    font-size: 18px;
+}
+
+.edit {
+    font-size: 12px;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: #fafafa;
+}
+
+/* 표 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th,
+td {
+    border-bottom: 1px solid var(--border);
+    padding: 8px 12px;
+    font-size: 14px;
+    text-align: left;
+}
+
+th {
+    background: #eaf2ea;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* 인용구 */
+blockquote {
+    margin: 14px 0;
+    padding-left: 14px;
+    border-left: 4px solid var(--accent);
+    color: var(--muted);
+    font-style: italic;
+    background: #f8faf8;
+}
+
+/* 기본 버튼 스타일 */
+.btn {
+    display: inline-block;
+    padding: 10px 14px;
+    border: 1px solid #d6dbd2;
+    border-radius: 8px;
+    background: #f8faf8;
+    font-weight: 600;
+    color: #2e7031;
+    margin-top: 10px;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.btn:hover {
+    background: #e6efe6;
+}
+
+
+.symbol {
+    text-align: center;
+    background: #0a0a0a;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+    color: #d0f0d0;
+}
+
+.symbol-image img {
+    width: 220px;
+    border: 2px solid #2e7031;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(50, 255, 50, 0.15);
+    margin-bottom: 10px;
+}
+
+.symbol-caption {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #b8d4b8;
+    background: rgba(255, 255, 255, 0.02);
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(90, 150, 90, 0.2);
+}
+
+.warning {
+    border: 1px solid #b8cbb8;
+    background: #edf5ed;
+    box-shadow: 0 0 6px rgba(60, 90, 60, 0.05);
+    position: relative;
+}
+
+.warning h2 {
+    color: #2e7031;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.warning p {
+    color: #bd7b24;
+    font-size: 14px;
+    margin: 4px 0;
+}
+
+.warning .log {
+    font-family: "Courier New", monospace;
+    color: #4c6f4c;
+    background: #f6fbf6;
+    border: 1px solid #cfe0cf;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.warning .small {
+    font-size: 13px;
+    color: #466046;
+    border-top: 1px dashed #b8cbb8;
+    margin-top: 8px;
+    padding-top: 6px;
+}
+
+.locked-badge {
+    position: absolute;
+    top: -0px;
+    right: 10px;
+    background: #144e18;
+    color: #e8ffe8;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid #4fa64f;
+    box-shadow: 0 0 8px rgba(70, 255, 70, 0.2);
+    animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    45% {
+        opacity: 1;
+        text-shadow: 0 0 6px #6aff6a;
+    }
+
+    50%,
+    100% {
+        opacity: 0.3;
+        text-shadow: none;
+    }
+}
+
+/* ───── 반응형 ───── */
+@media (max-width: 900px) {
+    header {
+        align-items: flex-start;
+        /* 왼쪽 정렬로 전환 */
+        text-align: left;
+    }
+
+    .wrap {
+        grid-template-columns: 1fr;
+        padding: 16px;
+    }
+
+    .toc {
+        border-radius: 6px;
+        font-size: 13px;
+        padding: 10px;
+        margin-bottom: 12px;
+    }
+
+    .card {
+        padding: 16px;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .title-sub {
+        font-size: 14px;
+    }
+}
