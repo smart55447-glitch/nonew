@@ -21,7 +21,7 @@ body {
 }
 
 pre {
-    font-size: 15px;
+    font-size: 25px;
     line-height: 1.2em;
     text-align: left;
     white-space: pre;
@@ -71,23 +71,6 @@ pre {
 
     95% {
         transform: scaleY(0.1);
-    }
-}
-
-/* 페이드아웃 (선택사항) */
-.fadeout-overlay {
-    pointer-events: none;
-    position: fixed;
-    inset: 0;
-    background: #000;
-    opacity: 0;
-    animation: fadeout 2.5s ease forwards;
-    animation-delay: 7s;
-}
-
-@keyframes fadeout {
-    to {
-        opacity: 1;
     }
 }
 

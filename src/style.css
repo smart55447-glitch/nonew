@@ -688,3 +688,41 @@ html {
         opacity: 0.4;
     }
 }
+
+.bsod-bg {
+    position: fixed;
+    inset: 0;
+    background: url("./a.jpg") center/cover no-repeat;
+    z-index: 0;
+    opacity: 0.6;
+
+    /* 🔹 블렌더 모드 설정 */
+    mix-blend-mode: lighten;
+    /* 기본적으로 밝게 섞기 */
+    opacity: 0.02;
+
+    /* 🔹 색감 보정 */
+    filter: contrast(1.2) brightness(1.1) saturate(1.3);
+
+    /* 🔹 미세한 움직임 효과로 생동감 추가 */
+    animation: bgShift 8s infinite alternate ease-in-out;
+}
+
+@keyframes bgShift {
+    0% {
+        transform: scale(1) translate(0, 0);
+    }
+
+    50% {
+        transform: scale(1.05) translate(-2%, -2%);
+    }
+
+    100% {
+        transform: scale(1) translate(0, 0);
+    }
+}
+
+#container {
+    position: relative;
+    z-index: 1;
+}
